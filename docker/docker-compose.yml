@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  php-fpm:
+    container_name: php-fpm
+    build:
+      context: ./../
+      dockerfile: ./docker/php-fpm/Dockerfile
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
+    volumes:
+      - /var/www/vendor/
+      - ./../:/var/www/
+
+  nginx:
+    container_name: nginx
+    environment:
+      MYSQL_DATABASE: 'db'
+    build:
+      context: ./nginx
+    ports:
+      - '888:80'
+    volumes:
+      - ..:/var/www:rw
+
+
+
+#  postgres:
+#    container_name: postgres
+#    build:
+#      context: ./postgres
+#    ports:
+#      - ${POSTGRES_PORT}:5432
+#    environment:
+#      POSTGRES_DB: ${POSTGRES_DB}
+#      POSTGRES_USER: ${POSTGRES_USER}
+#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#    volumes:
+#      - db_data:/var/lib/postgresql/data:rw
+
+volumes:
+  db_data:
