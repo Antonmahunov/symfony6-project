@@ -8,6 +8,8 @@ DOCKER_COMPOSE_PHP_FPM_EXEC = ${DOCKER_COMPOSE} exec -u www-data php-fpm
 ##################
 # Docker compose
 ##################
+dc_up:
+	${DOCKER_COMPOSE} up -d --remove-orphans
 
 dc_build:
 	${DOCKER_COMPOSE} build
@@ -17,9 +19,6 @@ dc_start:
 
 dc_stop:
 	${DOCKER_COMPOSE} stop
-
-dc_up:
-	${DOCKER_COMPOSE} up  --remove-orphans
 
 dc_ps:
 	${DOCKER_COMPOSE} ps
