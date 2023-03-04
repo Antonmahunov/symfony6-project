@@ -12,7 +12,7 @@
     {% if game is not null %}
         GAME ID: {{ game.id }}
     {% endif %}
-    <form action="{{ path('game_create') }}" method="POST">
+    <form method="POST">
         <input type="text" name="matchLeagueId" placeholder="matchLeagueId">
         <input type="text" name="homeTeam" placeholder="homeTeam">
         <input type="text" name="awayTeam" placeholder="awayTeam">

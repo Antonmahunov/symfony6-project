@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,12 +56,11 @@ class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/game/{id}', name: 'game_update', methods: ['GET', 'POST'])]
-    public function update(Request $request, EntityManagerInterface $entityManager, $id): Response
+    #[Route('/game/edit/{id}', name: 'game_update', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, Game $game): Response
     {
-        $game = $entityManager->getRepository(Game::class)->find($id);
         if (!$game) {
-            throw $this->createNotFoundException('Game not found');
+            throw $this->createNotFoundException("The game doesn't exist");
         }
 
         if ($request->isMethod('POST')) {
@@ -68,16 +68,15 @@ class GameController extends AbstractController
 
             $teamRepository = $entityManager->getRepository(Team::class);
 
-            $game->setMatchLeagueId($data['matchLeagueId']);
-            $game->setHomeTeam($teamRepository->find($data['homeTeam']));
-            $game->setAwayTeam($teamRepository->find($data['awayTeam']));
-            $entityManager->persist($game);
+            $game->setMatchLeagueId($data['matchLeagueId'])
+                ->setHomeTeam($teamRepository->find($data['homeTeam']))
+                ->setAwayTeam($teamRepository->find($data['awayTeam']));
             $entityManager->flush();
 
             return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
         }
 
-        return $this->render('game/show.html.twig', [
+        return $this->render('game/create.html.twig', [
             'game' => $game,
         ]);
     }
