@@ -59,18 +59,16 @@ class GameController extends AbstractController
     #[Route('/game/edit/{id}', name: 'game_update', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, Game $game): Response
     {
-        if (!$game) {
-            throw $this->createNotFoundException("The game doesn't exist");
-        }
-
         if ($request->isMethod('POST')) {
-            $data = $request->request->all();
+            $data = $request->request->all()
+            ;
 
             $teamRepository = $entityManager->getRepository(Team::class);
 
             $game->setMatchLeagueId($data['matchLeagueId'])
                 ->setHomeTeam($teamRepository->find($data['homeTeam']))
                 ->setAwayTeam($teamRepository->find($data['awayTeam']));
+
             $entityManager->flush();
 
             return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
