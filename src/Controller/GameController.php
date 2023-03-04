@@ -54,4 +54,31 @@ class GameController extends AbstractController
             'game' => $game,
         ]);
     }
+
+    #[Route('/game/{id}', name: 'game_update', methods: ['GET', 'POST'])]
+    public function update(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        $game = $entityManager->getRepository(Game::class)->find($id);
+        if (!$game) {
+            throw $this->createNotFoundException('Game not found');
+        }
+
+        if ($request->isMethod('POST')) {
+            $data = $request->request->all();
+
+            $teamRepository = $entityManager->getRepository(Team::class);
+
+            $game->setMatchLeagueId($data['matchLeagueId']);
+            $game->setHomeTeam($teamRepository->find($data['homeTeam']));
+            $game->setAwayTeam($teamRepository->find($data['awayTeam']));
+            $entityManager->persist($game);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('game_show', ['id' => $game->getId()]);
+        }
+
+        return $this->render('game/show.html.twig', [
+            'game' => $game,
+        ]);
+    }
 }
