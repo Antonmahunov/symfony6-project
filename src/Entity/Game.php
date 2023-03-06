@@ -24,6 +24,12 @@ class Game
     #[ORM\JoinColumn(nullable: false)]
     private ?Team $awayTeam = null;
 
+    #[ORM\Column]
+    private ?int $HomeTeamGoal = null;
+
+    #[ORM\Column]
+    private ?int $AwayTeamGoal = null;
+
     public function getId(): int
     {
         return $this->id;
@@ -61,6 +67,30 @@ class Game
     public function setAwayTeam(?Team $awayTeam): self
     {
         $this->awayTeam = $awayTeam;
+
+        return $this;
+    }
+
+    public function getHomeTeamGoal(): ?int
+    {
+        return $this->HomeTeamGoal;
+    }
+
+    public function setHomeTeamGoal(int $HomeTeamGoal): self
+    {
+        $this->HomeTeamGoal = $HomeTeamGoal;
+
+        return $this;
+    }
+
+    public function getAwayTeamGoal(): ?int
+    {
+        return $this->AwayTeamGoal;
+    }
+
+    public function setAwayTeamGoal(int $AwayTeamGoal): self
+    {
+        $this->AwayTeamGoal = $AwayTeamGoal;
 
         return $this;
     }

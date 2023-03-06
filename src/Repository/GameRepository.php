@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Game;
+use App\Entity\Team;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,14 @@ class GameRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function findGamesByTeam(Team $team): ?array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.homeTeam = :val')
+            ->setParameter('val', $team)
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

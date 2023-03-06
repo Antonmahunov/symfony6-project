@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MatchController!{% endblock %}
+{% block title %}Hello TeamController!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,8 +9,9 @@
 </style>
 
 <div class="example-wrapper">
-    matchLeagueId: {{ game.matchLeagueId }}<br>
-    {{ game.homeTeam.name }} VS {{ game.awayTeam.name }} {{ game.homeTeamGoal }} : {{ game.awayTeamGoal }}<br>
+    {% for team in teams %}
+            <a href="{{ path('team_history', {'id': team.getId()}) }}">{{ team.getName() }}</a>
+        <br>
+    {% endfor %}
 </div>
 {% endblock %}
-

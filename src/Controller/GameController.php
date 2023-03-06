@@ -23,7 +23,6 @@ class GameController extends AbstractController
 
     #[Route('/game/{id}', name: 'game_show', methods: 'GET', requirements: ['id' => '\d+'])]
     public function show(Game $game): Response
-//    public function show(int $id, EntityManagerInterface $entityManager): Response
     {
         return $this->render('game/show.html.twig', [
             'game' => $game,
@@ -41,10 +40,12 @@ class GameController extends AbstractController
 
             $teamRepository = $entityManager->getRepository(Team::class);
 
-            $game = new Game();
-            $game->setMatchLeagueId($data['matchLeagueId']);
-            $game->setHomeTeam($teamRepository->find($data['homeTeam']));
-            $game->setAwayTeam($teamRepository->find($data['awayTeam']));
+            $game = (new Game())
+                ->setMatchLeagueId($data['matchLeagueId'])
+                ->setHomeTeam($teamRepository->find($data['homeTeam']))
+                ->setAwayTeam($teamRepository->find($data['awayTeam']))
+            ;
+
             $entityManager->persist($game);
             $entityManager->flush();
 
@@ -60,14 +61,14 @@ class GameController extends AbstractController
     public function edit(Request $request, EntityManagerInterface $entityManager, Game $game): Response
     {
         if ($request->isMethod('POST')) {
-            $data = $request->request->all()
-            ;
+            $data = $request->request->all();
 
             $teamRepository = $entityManager->getRepository(Team::class);
 
             $game->setMatchLeagueId($data['matchLeagueId'])
                 ->setHomeTeam($teamRepository->find($data['homeTeam']))
-                ->setAwayTeam($teamRepository->find($data['awayTeam']));
+                ->setAwayTeam($teamRepository->find($data['awayTeam']))
+            ;
 
             $entityManager->flush();
 
