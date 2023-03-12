@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\Team;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,7 @@ class TeamController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/', name: 'app_team')]
+    #[Route('/', name: 'team')]
     public function index(): Response
     {
         return $this->render('team/index.html.twig', [

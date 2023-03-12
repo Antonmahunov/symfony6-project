@@ -9,16 +9,8 @@
 </style>
 
 <div class="example-wrapper">
-    {% if game is not null %}
-        GAME ID: {{ game.id }}
-    {% endif %}
-    <form method="POST">
-        <input type="text" name="matchLeagueId" placeholder="matchLeagueId">
-        <input type="text" name="homeTeam" placeholder="homeTeam">
-        <input type="text" name="awayTeam" placeholder="awayTeam">
-        <input type="text" name="awayTeamGoal" placeholder="awayTeamGoal">
-        <input type="text" name="awayTeamGoal" placeholder="awayTeamGoal">
-        <input type="submit" value="submit">
-    </form>
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
 </div>
 {% endblock %}

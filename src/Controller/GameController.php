@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\Team;
+use App\Form\GameType;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,7 @@ class GameController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         return $this->render('game/index.html.twig', [
-            'controller_name' => 'GameController',
+            'games' => $entityManager->getRepository(Game::class)->findAll(),
         ]);
     }
 
@@ -32,19 +32,12 @@ class GameController extends AbstractController
     #[Route('/game/create', name: 'game_create', methods: ['GET', 'POST'])]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $game = null;
+        $game = new Game();
 
-        if ($request->isMethod('POST')) {
-            // должна быть конечно же валидация
-            $data = $request->request->all();
+        $form = $this->createForm(GameType::class, $game);
+        $form->handleRequest($request);
 
-            $teamRepository = $entityManager->getRepository(Team::class);
-
-            $game = (new Game())
-                ->setMatchLeagueId($data['matchLeagueId'])
-                ->setHomeTeam($teamRepository->find($data['homeTeam']))
-                ->setAwayTeam($teamRepository->find($data['awayTeam']))
-            ;
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($game);
             $entityManager->flush();
@@ -53,7 +46,7 @@ class GameController extends AbstractController
         }
 
         return $this->render('game/create.html.twig', [
-            'game' => $game,
+            'form' => $form->createView()
         ]);
     }
 
@@ -68,6 +61,8 @@ class GameController extends AbstractController
             $game->setMatchLeagueId($data['matchLeagueId'])
                 ->setHomeTeam($teamRepository->find($data['homeTeam']))
                 ->setAwayTeam($teamRepository->find($data['awayTeam']))
+                ->setHomeTeamGoal($teamRepository->find($data['homeTeamGoal']))
+                ->setAwayTeamGoal($teamRepository->find($data['awayTeamGoal']))
             ;
 
             $entityManager->flush();

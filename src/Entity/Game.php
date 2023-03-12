@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
@@ -18,17 +19,19 @@ class Game
 
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotIdenticalTo(propertyPath: 'awayTeam', message: 'The home team and away team must not be identical.')]
     private ?Team $homeTeam = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotIdenticalTo(propertyPath: 'homeTeam', message: 'The home team and away team must not be identical.')]
     private ?Team $awayTeam = null;
 
     #[ORM\Column]
-    private ?int $HomeTeamGoal = null;
+    private ?int $homeTeamGoal = null;
 
     #[ORM\Column]
-    private ?int $AwayTeamGoal = null;
+    private ?int $awayTeamGoal = null;
 
     public function getId(): int
     {
@@ -73,24 +76,24 @@ class Game
 
     public function getHomeTeamGoal(): ?int
     {
-        return $this->HomeTeamGoal;
+        return $this->homeTeamGoal;
     }
 
-    public function setHomeTeamGoal(int $HomeTeamGoal): self
+    public function setHomeTeamGoal(int $homeTeamGoal): self
     {
-        $this->HomeTeamGoal = $HomeTeamGoal;
+        $this->homeTeamGoal = $homeTeamGoal;
 
         return $this;
     }
 
     public function getAwayTeamGoal(): ?int
     {
-        return $this->AwayTeamGoal;
+        return $this->awayTeamGoal;
     }
 
-    public function setAwayTeamGoal(int $AwayTeamGoal): self
+    public function setAwayTeamGoal(int $awayTeamGoal): self
     {
-        $this->AwayTeamGoal = $AwayTeamGoal;
+        $this->awayTeamGoal = $awayTeamGoal;
 
         return $this;
     }
