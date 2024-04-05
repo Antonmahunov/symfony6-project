@@ -9,7 +9,7 @@ DOCKER_COMPOSE_PHP_FPM_EXEC = ${DOCKER_COMPOSE} exec -u www-data php-fpm
 # Docker compose
 ##################
 dc_up:
-	${DOCKER_COMPOSE} up -d --remove-orphans
+	${DOCKER_COMPOSE} up --remove-orphans
 
 dc_build:
 	${DOCKER_COMPOSE} build
@@ -45,3 +45,9 @@ db_migrate:
 	${DOCKER_COMPOSE} exec -u www-data php-fpm bin/console doctrine:migrations:migrate --no-interaction
 db_diff:
 	${DOCKER_COMPOSE} exec -u www-data php-fpm bin/console doctrine:migrations:diff --no-interaction
+
+sosi:
+	${DOCKER_COMPOSE} exec -u www-data php-fpm bin/console make:entity
+
+prev:
+	${DOCKER_COMPOSE} exec -u www-data php-fpm bin/console d:m:m prev
