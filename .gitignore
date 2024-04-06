@@ -15,3 +15,4 @@
 ###< phpunit/phpunit ###
 
 .idea
+docker/data

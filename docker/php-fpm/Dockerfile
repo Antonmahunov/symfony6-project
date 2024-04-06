@@ -4,7 +4,7 @@ FROM php:8.1.0-fpm-alpine
 RUN apk add --no-cache curl git build-base zlib-dev oniguruma-dev autoconf bash
 
 # Postgres
-RUN apk add --no-cache libpq-dev && docker-php-ext-install pdo_pgsql
+RUN apk add --no-cache libpq-dev && docker-php-ext-install pdo_mysql
 
 # Configure non-root user.
 ARG PUID=1000

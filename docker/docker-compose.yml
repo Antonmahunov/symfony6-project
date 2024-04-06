@@ -14,8 +14,8 @@ services:
 
   nginx:
     container_name: nginx
-    environment:
-      MYSQL_DATABASE: 'db'
+#    environment:
+#      MYSQL_DATABASE: 'db'
     build:
       context: ./nginx
     ports:
@@ -23,18 +23,23 @@ services:
     volumes:
       - ..:/var/www:rw
 
-  qwe:
-    container_name: postgres
+  mysql:
+    container_name: my_db
     build:
-      context: ./postgres
+      context: ./mysql
     ports:
-      - '5432:5432'
+      - "127.0.0.1:3306:3306"
     environment:
-      POSTGRES_DB: 'nhl'
-      POSTGRES_USER: 'nhl'
-      POSTGRES_PASSWORD: 'nhl'
+      - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - nhl_db_data:/var/lib/postgresql/data:rw
+      - ./data/mysql/var/lib/mysql:/var/lib/mysql:delegated
 
-volumes:
-  nhl_db_data:
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+    #      ADMINER_DEFAULT_SERVER: mariadb
+    restart: always
+    ports:
+      - 7777:8080
