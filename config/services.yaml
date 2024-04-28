@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     test: '%env(resolve:DATABASE_URL)%'
+    locale: 'en'
+    hello_message: 'Hello from service'
 
 services:
     # default configuration for services in *this* file
