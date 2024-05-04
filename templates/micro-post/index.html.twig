@@ -1,16 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert-success"></div>
+        {{ message }}
+    {% endfor %}
     <small class="d-block text-right mt-3">
         <a href="{{ path('micropost_add') }}">Add new</a>
     </small>
     <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
 {% for post in posts %}
-<div class="media text-muted pt-3">
-    <img data-src="holder.js/32x32?text=MJ&bg=e83e8c&fg=fff&size=8" alt="" class="mr-2 rounded">
-    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <span class="d-block"><strong class="text-gray-dark">@username</strong> <small>{{ post.time|date('d/m/y H:i') }}</small></span>
-        {{ post.text }}
-    </p>
-</div>
+    <a href="{{ path('micropost_show', {'id': post.id }) }}">
+    {{ include('micro-post/row-post.html.twig', {'post': post }) }}
+    </a>
+
+    <small class="d-block text-right mt-3">
+        <a href="{{ path('micropost_edit', {'id': post.id }) }}">Edit</a>
+        <a href="{{ path('micropost_delete', {'id': post.id }) }}">Delete</a>
+    </small>
     {% endfor %}
 {% endblock %}
