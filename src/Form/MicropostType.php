@@ -13,6 +13,7 @@ class MicropostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         parent::buildForm($builder, $options);
 
         $builder->add('text', TextareaType::class, [
