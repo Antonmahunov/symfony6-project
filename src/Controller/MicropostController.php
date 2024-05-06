@@ -104,12 +104,13 @@ class MicropostController extends AbstractController
      */
     public function delete(Request $request, Micropost $micropost): Response
     {
+        $micropostId = $micropost->getId();
         $this->entityManager->remove($micropost);
         $this->entityManager->flush();
 
         $this->requestStack->getSession()->getFlashbag()->add(
             'notice',
-            'Post' . $micropost->getId() . 'has been successfully deleted.'
+            'Post ' . $micropostId . ' has been successfully deleted.'
         );
 
         return $this->redirectToRoute('micro_post_index');

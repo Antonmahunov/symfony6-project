@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     {% for message in app.flashes('notice') %}
-        <div class="alert-success"></div>
+        <div class="alert alert-success">
         {{ message }}
+        </div>
     {% endfor %}
     <small class="d-block text-right mt-3">
         <a href="{{ path('micropost_add') }}">Add new</a>
