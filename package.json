@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "@symfony/webpack-encore": "^4.6.1",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "webpack": "^5.91.0",
+    "webpack-notifier": "^1.15.0"
+  },
+  "dependencies": {
+    "bootstrap": "4.0.0",
+    "holderjs": "^2.9.9",
+    "jquery": "3.3.1",
+    "popper.js": "1.12.9",
+    "webpack-cli": "^5.1.4"
+  }
+}
