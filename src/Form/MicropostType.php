@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Micropost;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +17,8 @@ class MicropostType extends AbstractType
 
         parent::buildForm($builder, $options);
 
-        $builder->add('text', TextareaType::class, [
+        $builder
+            ->add('text', TextareaType::class, [
             'label' => false,
         ])
             ->add('save', SubmitType::class, []);
@@ -26,6 +28,7 @@ class MicropostType extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
+            'csrf_protection' => false,
             'data_class' => Micropost::class,
         ]);
     }
