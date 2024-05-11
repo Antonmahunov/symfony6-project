@@ -1,23 +1,20 @@
 security:
     password_hashers:
-        Symfony\Component\Security\Core\User\User: plaintext
-        Symfony\Component\Security\Core\User\InMemoryUser: plaintext
+        App\Entity\User: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory:
-                users:
-                    john:
-                        password: helloJohn
-                        roles: 'ROLE_USER'
+        database_users:
+            entity: { class: App\Entity\User, property: username }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern: ^/
+
             # activate different ways to authenticate
 
-            http_basic: ~
+            #            http_basic: ~
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: true
@@ -26,5 +23,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/micro-post, roles: ROLE_USER }
-        # - { path: ^/profile, roles: ROLE_USER }
+    #         - { path: ^/micro-post, roles: ROLE_USER }
+    # - { path: ^/profile, roles: ROLE_USER }

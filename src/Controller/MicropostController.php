@@ -58,11 +58,12 @@ class MicropostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($micropost);
-            $this->entityManager->flush();
 
-            return $this->redirectToRoute('micro_post_index');
-        }
+                $this->entityManager->persist($micropost);
+                $this->entityManager->flush();
+
+                return $this->redirectToRoute('micro_post_index');
+            }
 
         return $this->render('micro-post/add.html.twig', [
             'form' => $form->createView(),
@@ -104,6 +105,7 @@ class MicropostController extends AbstractController
      */
     public function delete(Request $request, Micropost $micropost): Response
     {
+
         $micropostId = $micropost->getId();
         $this->entityManager->remove($micropost);
         $this->entityManager->flush();
