@@ -1,6 +1,7 @@
 security:
     password_hashers:
-        Symfony\Component\Security\Core\User\User: plaintext
+        App\Entity\User:
+            algorithm: bcrypt
         Symfony\Component\Security\Core\User\InMemoryUser: plaintext
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -17,9 +18,23 @@ security:
         main:
 #            anonymous: true
 
+
             # activate different ways to authenticate
 
-            http_basic: ~
+#            http_basic: ~
+            form-login:
+                check_path: security_login
+                login_path: security_login
+                enable_csrf: true
+                default_target_path: micro_post_index
+#                always_use_default_target_path: false
+#                use_referer: true
+#                failure_path: true
+#                username_parameter: _username
+#                password_parameter: _password
+            logout:
+                path: security_logout
+                target: micro_post_index
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: true
