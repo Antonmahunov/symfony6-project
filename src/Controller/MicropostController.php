@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Micropost;
 use App\Form\MicropostType;
 use App\Repository\MicropostRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,22 +17,20 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MicropostController extends AbstractController
 {
-    private MicropostRepository $micropostRepository;
+
     private FormFactoryInterface $formFactory;
-    private EntityManagerInterface $entityManager;
     private RequestStack $requestStack;
+    private $micropostRepository;
 
     public function __construct(
-        MicropostRepository    $micropostRepository,
         FormFactoryInterface   $formFactory,
-        EntityManagerInterface $entityManager,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        MicropostRepository $micropostRepository
     )
     {
-        $this->micropostRepository = $micropostRepository;
         $this->formFactory = $formFactory;
-        $this->entityManager = $entityManager;
         $this->requestStack = $requestStack;
+        $this->micropostRepository = $micropostRepository;
     }
 
     /**
@@ -70,7 +67,7 @@ class MicropostController extends AbstractController
         ]);
 
     }
-
+//
     /**
      * @Route("/{id}", name="micropost_show")
      */
