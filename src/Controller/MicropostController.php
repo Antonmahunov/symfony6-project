@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Micropost;
 use App\Form\MicropostType;
 use App\Repository\MicropostRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,17 +22,20 @@ class MicropostController extends AbstractController
 
     private FormFactoryInterface $formFactory;
     private RequestStack $requestStack;
-    private $micropostRepository;
+    private MicropostRepository $micropostRepository;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         FormFactoryInterface   $formFactory,
         RequestStack $requestStack,
-        MicropostRepository $micropostRepository
+        MicropostRepository $micropostRepository,
+        EntityManagerInterface $entityManager
     )
     {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
         $this->micropostRepository = $micropostRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
