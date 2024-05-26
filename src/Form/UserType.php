@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\User;
-use PHPUnit\Framework\Constraint\IsTrue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -13,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class UserType extends AbstractType
 {
@@ -21,6 +21,8 @@ class UserType extends AbstractType
         $builder
             ->add('username', TextType::class)
             ->add('email', EmailType::class)
+            ->add('firstname', TextType::class)
+            ->add('lastname', TextType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
@@ -30,8 +32,6 @@ class UserType extends AbstractType
                     'label' => 'Confirm Password',
                 ]
             ])
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
             ->add('termsAccepted', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => new IsTrue(),

@@ -6,7 +6,6 @@ use App\Entity\Micropost;
 use App\Form\MicropostType;
 use App\Repository\MicropostRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
