@@ -4,13 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\This;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(fields: ['email'])]
-class User implements UserInterface, \Serializable, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
+class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,8 +29,13 @@ class User implements UserInterface, \Serializable, \Symfony\Component\Security\
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[Assert\Length(min: 8, max: 255)]
+    #[Assert\NotBlank]
+    private $plainPassword;
+
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Assert\Email(message: 'this email is not valid')]
     private ?string $email = null;
 
     public function getId(): ?int
@@ -141,5 +146,21 @@ class User implements UserInterface, \Serializable, \Symfony\Component\Security\
             $this->username,
             $this->password,
             ) = unserialize($serialized);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword(): mixed
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword(mixed $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
     }
 }
