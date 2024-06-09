@@ -8,11 +8,19 @@
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% endblock %}
+    <script src="https://cdn.jsdelivr.net/gh/imsky/holder/holder.min.js"></script>
 </head>
 <body class="bg-light">
 <main role="main" class="container">
     <div class="my-3 p-3 bg-white rounded box-shadow">
         {% block body %}
+                <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+                <div class="media text-muted pt-3">
+                    <img data-src="holder.js/32x32?text=MJ&bg=e83e8c&fg=fff&size=8" alt="" class="mr-2 rounded">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                        <span class="d-block"><strong class="text-gray-dark">@username</strong> <small>· 2hrs</small></span>
+                    </p>
+                </div>
         {% endblock %}
     </div>
 </main>

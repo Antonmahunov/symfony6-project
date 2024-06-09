@@ -71,7 +71,7 @@ class MicropostController extends AbstractController
         ]);
 
     }
-//
+
     /**
      * @Route("/{id}", name="micropost_show")
      */

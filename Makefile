@@ -36,7 +36,6 @@ dc_down:
 app_bash:
 	${DOCKER_COMPOSE} exec -u www-data php-fpm sh
 
-
 ##################
 # Database
 ##################

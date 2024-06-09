@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,12 +32,20 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
 
     #[Assert\Length(min: 8, max: 255)]
     #[Assert\NotBlank]
-    private $plainPassword;
+    private mixed $plainPassword;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Email(message: 'this email is not valid')]
     private ?string $email = null;
+
+    #[ORM\OneToMany(targetEntity: Micropost::class, mappedBy: 'user')]
+    private $posts;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -162,5 +171,10 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     public function setPlainPassword(mixed $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    public function getPosts()
+    {
+        return $this->posts->add();
     }
 }

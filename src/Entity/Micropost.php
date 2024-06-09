@@ -20,6 +20,10 @@ class Micropost
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $time = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
+    #[ORM\JoinColumn()]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -47,5 +51,16 @@ class Micropost
         $this->time = $time;
 
         return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
     }
 }
