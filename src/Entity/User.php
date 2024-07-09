@@ -32,7 +32,7 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
 
     #[Assert\Length(min: 8, max: 255)]
     #[Assert\NotBlank]
-    private mixed $plainPassword;
+    private ?string $plainPassword = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
@@ -121,12 +121,12 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
 
     public function getUserIdentifier(): string
     {
-        return $this->getId();
+        return $this->getEmail();
     }
 
     public function serialize()
@@ -142,25 +142,25 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     public function __serialize(): array
     {
         return [
-            $this->id,
-            $this->username,
-            $this->firstname,
+            'id' => $this->id,
+            'username' => $this->username,
+            'password' => $this->password,
+            'email' => $this->email,
         ];
     }
 
-    public function __unserialize($serialized): void
+    public function __unserialize(array $data): void
     {
-        list(
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
+        $this->id = $data['id'];
+        $this->username = $data['username'];
+        $this->password = $data['password'];
+        $this->email = $data['email'];
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getPlainPassword(): mixed
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
