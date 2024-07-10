@@ -177,4 +177,9 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     {
         return $this->posts->add();
     }
+
+    public function getFullName(): string
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
 }

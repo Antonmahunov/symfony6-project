@@ -43,6 +43,7 @@ class MicropostController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
+
         return $this->render('micro-post/index.html.twig', [
            'posts' =>  $this->micropostRepository->findBy([], ['time' => 'DESC']),
             'user' => $user,
@@ -110,7 +111,6 @@ class MicropostController extends AbstractController
     {
 
         $micropostId = $micropost->getId();
-        $this->entityManager->remove($micropost);
         $this->entityManager->flush();
 
         $this->requestStack->getSession()->getFlashbag()->add(
