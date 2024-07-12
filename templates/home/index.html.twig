@@ -2,8 +2,35 @@
 
 {% block title %}Home Page{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }} <!-- включение стилей из base.html.twig -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .background {
+            background-image: url('{{ asset('images/1920.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <h1>Welcome to the Micro Blog!</h1>
-    <a href="{{ path('micro_post_index') }}">Check all posts created by our Users</a>
-    <p></p>
+    <div class="background">
+        <h1>Welcome to the Micro Blog!</h1>
+        <a href="{{ path('micro_post_index') }}">Check all posts created by our Users</a>
+        <p></p>
+    </div>
 {% endblock %}

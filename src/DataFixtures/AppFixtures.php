@@ -15,19 +15,22 @@ class AppFixtures extends Fixture
             'username' => 'john_doe',
             'email' => 'john_doe@doe.com',
             'password' => 'john123',
-            'fullName' => 'John Doe',
+            'firstname' => 'John',
+            'lastname' => 'Doe',
         ],
         [
             'username' => 'rob_smith',
             'email' => 'rob_smith@smith.com',
             'password' => 'rob12345',
-            'fullName' => 'Rob Smith',
+            'firstname' => 'Rob',
+            'lastname' => 'Smith',
         ],
         [
             'username' => 'marry_gold',
             'email' => 'marry_gold@gold.com',
             'password' => 'marry12345',
-            'fullName' => 'Marry Gold',
+            'firstname' => 'Marry',
+            'lastname' => 'Gold',
         ],
     ];
 
@@ -67,7 +70,7 @@ class AppFixtures extends Fixture
             $micropost
                 ->setText(self::POST_TEXT[rand(0,count(self::POST_TEXT)-1)])
                 ->setTime(new \DateTime())
-                ->setUser($this->getReference('jdoe'))
+                ->setUser($this->getReference(self::USERS[rand(0, count(self::USERS)-1)]['username']))
             ;
 
             $manager->persist($micropost);
