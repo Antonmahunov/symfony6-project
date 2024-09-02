@@ -9,7 +9,7 @@
         <a href="{{ path('micropost_add') }}">Add new</a>
     </small>
     <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
-{% for post in posts %}
+{% for post in pagination %}
     <a href="{{ path('micropost_show', {'id': post.id }) }}">
         <div class="pink-square"></div>
     {{ include('micro-post/row-post.html.twig', {'post': post }) }}
@@ -20,4 +20,21 @@
         <a href="{{ path('micropost_delete', {'id': post.id }) }}">Delete</a>
     </small>
     {% endfor %}
+
+    <div class="pagination">
+        {% if currentPage > 1 %}
+            <a href="{{ path('micro_post_index', {'page': currentPage - 1}) }}" class="previous">Previous</a>
+        {% endif %}
+
+        <div class="page-numbers">
+            {% for i in 1..totalPages %}
+                <a href="{{ path('micro_post_index', {'page': i}) }}" class="{{ currentPage == i ? 'active' : '' }}">{{ i }}</a>
+            {% endfor %}
+        </div>
+
+        {% if currentPage < totalPages %}
+            <a href="{{ path('micro_post_index', {'page': currentPage + 1}) }}" class="next">Next</a>
+        {% endif %}
+    </div>
+
 {% endblock %}

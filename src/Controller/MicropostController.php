@@ -40,13 +40,20 @@ class MicropostController extends AbstractController
     /**
      * @Route("/", name="micro_post_index")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $user = $this->getUser();
+        $page = $request->query->getInt('page', 1);
+        $limit = 5;
+        $pagination = $this->micropostRepository->getPaginatedPosts($page, $limit);
+
 
         return $this->render('micro-post/index.html.twig', [
            'posts' =>  $this->micropostRepository->findBy([], ['time' => 'DESC']),
             'user' => $user,
+            'currentPage' => $page,
+            'totalPages' => ceil(count($pagination) / $limit),
+            'pagination' => $pagination,
         ]);
     }
 

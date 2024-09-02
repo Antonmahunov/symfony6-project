@@ -1,5 +1,10 @@
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
-.container { width: 590px; }
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.container {
+    width: 590px;
+}
 
 .navbar-brand {
     padding-top: .75rem;
@@ -15,4 +20,47 @@
     background-color: pink;
     float: left;
     margin-right: 10px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px; /* Добавляем расстояние между элементами */
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.pagination .previous,
+.pagination .next {
+    font-weight: bold;
+}
+
+.pagination .page-numbers {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Увеличиваем отступ между номерами страниц */
+}
+
+.pagination .previous-next {
+    display: flex;
+    align-items: center;
+    margin: 0 10px; /* Отступы для отделения предыдущей/следующей кнопок от номеров страниц */
 }
